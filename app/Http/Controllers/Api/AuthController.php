@@ -5,15 +5,17 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use app\Models\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
     public function register(Request $request){
+       
         $validate =$request->validate([
-            'name'=>['requried','string','max:255'],
-            'email'=>['required','email','max:255','unique'],
+            'name'=>['required','string','max:255'],
+            'email'=>['required','email','max:255','unique:users,email'],
             'password'=>['required','confirmed','min:8']
         ]);
 
@@ -38,7 +40,7 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
-        $validate =$request->validate([
+         $request->validate([
             'email'=>['required','email'],
             'password'=>['required','min:8']
         ]);
