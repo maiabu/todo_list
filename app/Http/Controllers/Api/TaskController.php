@@ -96,13 +96,15 @@ class TaskController extends Controller
         }
 
         $task=Task::findOrFail($id);
+        if(!$task){
          return response()->json([
-        'status' => true,
+        'status' => false,
         'message' => [
-        'ar' => 'تم الحذف بنجاح',
-        'en' => 'deleted successfully'
+        'ar' => 'غير موجود',
+        'en' => 'not found'
         ]
         ]);
+        }
 
         $validate=$request->validate([
             'title'=>['required','string','max:2000'],
